@@ -1,3 +1,4 @@
 __pycache__/
 curl.txt
 supervisord_log/
+db/
