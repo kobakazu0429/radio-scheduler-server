@@ -42,7 +42,7 @@ def redirect_api():
 def get_tasks():
     datas = []
 
-    query = Tasks.select().dicts().order_by(Tasks.id.desc())
+    query = Tasks.select().dicts().order_by(Tasks.time.desc())
 
     for task in query:
         datas.append(task)
