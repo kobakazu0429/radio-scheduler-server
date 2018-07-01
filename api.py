@@ -6,6 +6,7 @@ from peewee import *
 import json
 
 from datamodel import *
+from slack_notify import *
 
 
 api = Flask(__name__)
@@ -85,6 +86,8 @@ def create_task():
         thumbnail_url=request.form['thumbnail_url'],
         comic_url=request.form['comic_url'])
 
+    notify(Tasks.select().order_by(Tasks.id.desc()).get().id)
+
     return make_response(jsonify({'result': 'Uploaded'}), 200)
 
 
@@ -112,6 +115,8 @@ def update_task(id):
     updating_task.comic_url = request.form['comic_url']
 
     updating_task.save()
+
+    notify(id)
 
     return make_response(jsonify({'result': 'Updated'}), 200)
 
