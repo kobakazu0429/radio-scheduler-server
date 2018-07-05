@@ -36,27 +36,27 @@ def after_request_handler(exc):
 # 全件取得
 @api.route('/tasks/', methods=['GET'])
 def get_tasks():
-    datas = []
+    data = []
 
     query = Tasks.select().dicts().order_by(Tasks.time.desc())
 
     for task in query:
-        datas.append(task)
+        data.append(task)
 
-    return make_response(jsonify(datas))
+    return make_response(jsonify(data))
 
 
 # 1件取得
 @api.route('/tasks/<string:id>/', methods=['GET'])
 def get_task(id):
-    datas = []
+    data = []
 
     query = Tasks.select().where(Tasks.id == id).dicts()
 
     for task in query:
-        datas.append(task)
+        data.append(task)
 
-    return make_response(jsonify(datas))
+    return make_response(jsonify(data))
 
 
 # 新規作成
@@ -81,7 +81,7 @@ def create_task():
         thumbnail_url=request.form['thumbnail_url'],
         comic_url=request.form['comic_url'])
 
-    notify(Tasks.select().order_by(Tasks.id.desc()).get().id)
+    notify(Tasks.select(fn.MAX(Tasks.id)))
 
     return make_response(jsonify({'result': 'Uploaded'}), 200)
 
