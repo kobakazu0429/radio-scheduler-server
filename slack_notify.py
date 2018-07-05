@@ -13,26 +13,20 @@ USERNAME = '進捗どうですか？'
 ICON = 'https://i.imgur.com/uWrClZN.png'
 
 
-def notify(id):
-    query = Tasks.select().where(Tasks.id == id).dicts()
-
-    data = []
-
-    for task in query:
-        data.append(task)
-
-    time = data[0]['time']
-    title = data[0]['title']
-    manager = data[0]['manager']
-    published_at = data[0]['published_at'] if data[0]['published_at'] != '' else '未定'
-    recorded = '✓' if data[0]['recorded'] else '✗'
-    edited = '✓' if data[0]['edited'] else '✗'
-    reviewed = '✓' if data[0]['reviewed'] else '✗'
-    drew_thumbnail = '✓' if data[0]['drew_thumbnail'] else '✗'
-    reserved = '✓' if data[0]['reserved'] else '✗'
-    released = '✓' if data[0]['released'] else '✗'
-    drew_comic = '✓' if data[0]['drew_comic'] else '✗'
-    tweeted = '✓' if data[0]['tweeted'] else '✗'
+def notify(obj):
+    time = obj['time']
+    title = obj['title']
+    manager = obj['manager']
+    published_at = parser.parse(obj['published_at']).date(
+    ) if obj['published_at'] != '' else '未定'
+    recorded = '✓' if obj['recorded'] else '✗'
+    edited = '✓' if obj['edited'] else '✗'
+    reviewed = '✓' if obj['reviewed'] else '✗'
+    drew_thumbnail = '✓' if obj['drew_thumbnail'] else '✗'
+    reserved = '✓' if obj['reserved'] else '✗'
+    released = '✓' if obj['released'] else '✗'
+    drew_comic = '✓' if obj['drew_comic'] else '✗'
+    tweeted = '✓' if obj['tweeted'] else '✗'
 
     progress = '''\
 第%s回

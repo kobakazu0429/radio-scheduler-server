@@ -38,9 +38,9 @@ def after_request_handler(exc):
 def get_tasks():
     data = []
 
-    query = Tasks.select().dicts().order_by(Tasks.time.desc())
+    obj = Tasks.select().dicts().order_by(Tasks.time.desc())
 
-    for task in query:
+    for task in obj:
         data.append(task)
 
     return make_response(jsonify(data))
@@ -51,9 +51,9 @@ def get_tasks():
 def get_task(id):
     data = []
 
-    query = Tasks.select().where(Tasks.id == id).dicts()
+    obj = Tasks.select().where(Tasks.id == id).dicts()
 
-    for task in query:
+    for task in obj:
         data.append(task)
 
     return make_response(jsonify(data))
@@ -81,7 +81,7 @@ def create_task():
         thumbnail_url=request.form['thumbnail_url'],
         comic_url=request.form['comic_url'])
 
-    notify(Tasks.select(fn.MAX(Tasks.id)))
+    notify(request.form)
 
     return make_response(jsonify({'result': 'Uploaded'}), 200)
 
@@ -111,7 +111,7 @@ def update_task(id):
 
     updating_task.save()
 
-    notify(id)
+    notify(request.form)
 
     return make_response(jsonify({'result': 'Updated'}), 200)
 
