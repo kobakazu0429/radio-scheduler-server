@@ -24,14 +24,15 @@
 # +-------------------------------------------------------------------+
 
 from peewee import *
+import settings
 
 
 db = MySQLDatabase(
-    database='radio_scheduler',
-    user='root',
-    password='',
-    host='127.0.0.1',
-    port=3306)
+    database=settings.DB_NAME,
+    user=settings.DB_USER,
+    password=settings.DB_PASSWORD,
+    host=settings.DB_HOST,
+    port=settings.DB_PORT)
 
 
 class Tasks(Model):
