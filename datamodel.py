@@ -32,7 +32,8 @@ db = MySQLDatabase(
     user=settings.DB_USER,
     password=settings.DB_PASSWORD,
     host=settings.DB_HOST,
-    port=settings.DB_PORT)
+    port=settings.DB_PORT
+)
 
 
 class Tasks(Model):
