@@ -7,7 +7,7 @@ import settings
 
 
 # Config
-DEBUG_MODE = True
+DEBUG_MODE = False
 CHANNEL = 'C989JV2NN' if DEBUG_MODE else 'CB10PPRP1'
 USERNAME = '進捗どうですか？'
 ICON = 'https://i.imgur.com/uWrClZN.png'
