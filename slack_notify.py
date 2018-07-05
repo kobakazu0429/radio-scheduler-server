@@ -1,18 +1,19 @@
 import requests
 import json
 from dateutil import parser
+import settings
 
 
 # Config
-DEBUG_MODE = False
-INCOMING_WEBHOOK_URL = 'https://hooks.slack.com/services/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'
+DEBUG_MODE = True
 CHANNEL = 'C989JV2NN' if DEBUG_MODE else 'CB10PPRP1'
 USERNAME = '進捗どうですか？'
 ICON = 'https://i.imgur.com/uWrClZN.png'
 
 
 def notify(id):
-    r = requests.get('http://0.0.0.0:3000/api/v2/tasks/%s/' % id).json()
+    r = requests.get('http://0.0.0.0:%s/tasks/%s/' %
+                     (settings.FLASK_PORT, id)).json()
 
     time = r[0]['time']
     title = r[0]['title']
@@ -61,4 +62,4 @@ def notify(id):
         'attachments': attachments
     }
 
-    requests.post(INCOMING_WEBHOOK_URL, json.dumps(data))
+    requests.post(settings.INCOMING_WEBHOOK_URL, json.dumps(data))

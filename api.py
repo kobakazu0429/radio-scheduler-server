@@ -6,6 +6,7 @@ from peewee import *
 import json
 
 from datamodel import *
+import settings
 from slack_notify import *
 
 
@@ -32,14 +33,8 @@ def after_request_handler(exc):
         db.close()
 
 
-# ルートへのアクセスをapiへリダイレクトさせる
-@api.route('/', methods=['GET'])
-def redirect_api():
-    return redirect('/api/v2/tasks/', code=303)
-
-
 # 全件取得
-@api.route('/api/v2/tasks/', methods=['GET'])
+@api.route('/tasks/', methods=['GET'])
 def get_tasks():
     datas = []
 
@@ -52,7 +47,7 @@ def get_tasks():
 
 
 # 1件取得
-@api.route('/api/v2/tasks/<string:id>/', methods=['GET'])
+@api.route('/tasks/<string:id>/', methods=['GET'])
 def get_task(id):
     datas = []
 
@@ -65,7 +60,7 @@ def get_task(id):
 
 
 # 新規作成
-@api.route('/api/v2/tasks/', methods=['POST'])
+@api.route('/tasks/', methods=['POST'])
 def create_task():
     Tasks.create(
         time=request.form['time'],
@@ -92,7 +87,7 @@ def create_task():
 
 
 # 編集
-@api.route('/api/v2/tasks/<string:id>/', methods=['PATCH'])
+@api.route('/tasks/<string:id>/', methods=['PATCH'])
 def update_task(id):
     updating_task = Tasks.get(Tasks.id == id)
 
@@ -122,7 +117,7 @@ def update_task(id):
 
 
 # 削除
-@api.route('/api/v2/tasks/<string:id>/', methods=['DELETE'])
+@api.route('/tasks/<string:id>/', methods=['DELETE'])
 def delete_task(id):
     deleting_task = Tasks.get(Tasks.id == id)
 
@@ -132,4 +127,4 @@ def delete_task(id):
 
 
 if __name__ == '__main__':
-    api.run(host='0.0.0.0', port=3000)
+    api.run(host='0.0.0.0', port=settings.FLASK_PORT)
