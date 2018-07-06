@@ -19,14 +19,14 @@ def notify(obj):
     manager = obj['manager']
     published_at = parser.parse(obj['published_at']).date(
     ) if obj['published_at'] != '' else '未定'
-    recorded = '✓' if obj['recorded'] else '✗'
-    edited = '✓' if obj['edited'] else '✗'
-    reviewed = '✓' if obj['reviewed'] else '✗'
-    drew_thumbnail = '✓' if obj['drew_thumbnail'] else '✗'
-    reserved = '✓' if obj['reserved'] else '✗'
-    released = '✓' if obj['released'] else '✗'
-    drew_comic = '✓' if obj['drew_comic'] else '✗'
-    tweeted = '✓' if obj['tweeted'] else '✗'
+    recorded = '✓' if int(obj['recorded']) else '✗'
+    edited = '✓' if int(obj['edited']) else '✗'
+    reviewed = '✓' if int(obj['reviewed']) else '✗'
+    drew_thumbnail = '✓' if int(obj['drew_thumbnail']) else '✗'
+    reserved = '✓' if int(obj['reserved']) else '✗'
+    released = '✓' if int(obj['released']) else '✗'
+    drew_comic = '✓' if int(obj['drew_comic']) else '✗'
+    tweeted = '✓' if int(obj['tweeted']) else '✗'
 
     progress = '''\
 第%s回
